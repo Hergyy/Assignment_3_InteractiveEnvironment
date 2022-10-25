@@ -53,6 +53,7 @@ function setup() {
   menuSound = loadSound("assets/menu.mp3");
   //windSound = loadSound("assets/Wind.mp3");
 
+  //sceneManager library
   mgr = new SceneManager();
 
   mgr.addScene(Scene1);
@@ -91,6 +92,7 @@ function drawKeypoints() {
         ellipse(keypoint.position.x, keypoint.position.y, 10, 10);
       }
 
+      //Get points of left and right wrist
       if (poses.length > 0) {
         let leftWrist = poses[0].pose.keypoints[10].position;
         let rightWrist = poses[0].pose.keypoints[9].position;
@@ -160,6 +162,7 @@ function drawSkeleton() {
   }
 }
 
+//remove fish sprites
 function clearFish() {
   for(let i=allSprites.length; i--;) {
     allSprites[i].remove();
@@ -183,7 +186,6 @@ function mousePressed() {
 }
 
 function keyPressed() {
-  // You can optionaly handle the key press at global level...
   switch (key) {
     case "1":
       mgr.showScene(Scene1);
@@ -197,7 +199,7 @@ function keyPressed() {
       mgr.showScene(Scene4);
       break;
   }
-  // ... then dispatch via the SceneManager.
+  //dispatch via the SceneManager.
   mgr.handleEvent("keyPressed");
 }
 
@@ -288,7 +290,6 @@ function Scene2() {
     if (keyCode === RIGHT_ARROW) {
       let b = new Bird(random(-10, 0), random(0, height));
       birds.push(b);
-      //print("num of birds = "+birds.length);
     }
   }
 }
@@ -301,6 +302,7 @@ function Scene3() {
     menuSound.stop();
     clearSnow();
     
+    //create fish sprites
     fish1 = createSprite(fishImg1);
     fish2 = createSprite(fishImg2);
     fish3 = createSprite(fishImg3);
@@ -312,18 +314,12 @@ function Scene3() {
   }
 
   this.setup = function () {
-
-    // //how fast they move with the hand
-    // fish1.maxSpeed = 10;
-    // fish2.maxSpeed = 25;
-    // fish3.maxSpeed = 5;
-
     //create bubbles
     for (i = 0; i < 6; i++) {
       bubbles[i] = new Bubble(
-        random(0, 400),
-        random(450, 900),
-        random(25, 100),
+        random(0, 600),
+        random(250, 900),
+        random(25, 370),
         random(1, 3)
       )
     }
@@ -338,10 +334,7 @@ function Scene3() {
     if (poses.length > 0) {
       let leftWrist = poses[0].pose.keypoints[10].position;
       let rightWrist = poses[0].pose.keypoints[9].position;
-      //fill(255, 64);
-      //ellipseMode(CENTER);
-
-      //noStroke();
+      
       for (let j = 0; j < positionsLeft.length; j++) {
         positionsLeft[j][1]++;
       }
@@ -352,7 +345,7 @@ function Scene3() {
       }
       positionsRight.push([rightWrist.x, rightWrist.y]);
 
-      //mouse trailer, the speed is inversely proportional to the mouse distance
+      //fish following location of right wrist
       fish1.velocity.x = (rightWrist.x - fish1.position.x) / 10;
       fish1.velocity.y = (rightWrist.y - fish1.position.y) / 10;
       
@@ -405,9 +398,9 @@ function Scene4() {
     for (let drop of rain) {
       drop.fall();
       drop.draw();
-      //drop.splash();
       if (drop.hasFallen()) {
         drop.reset();
+        //if condition to remove rain 
         if (rain.length > drawSkeleton) {
           rain.length = rain.splice(i, 1);
   }
@@ -415,13 +408,5 @@ function Scene4() {
     }
     drawKeypoints();
     drawSkeleton();
-  }
-
-  this.keyPressed = function () {
-    print("KEYPRESSED");
-  }
-
-  this.mousePressed = function () {
-    print("MOUSEPRESSED");
   }
 }
