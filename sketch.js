@@ -205,8 +205,8 @@ function keyPressed() {
 
 function Scene1() {
   this.enter = function() {
-  menuSound.play();
-  windSound.stop();
+  //menuSound.play();
+  //windSound.stop();
   waterSound.stop();
   rainSound.stop();
   }
@@ -237,10 +237,10 @@ function Scene1() {
 function Scene2() {
   this.enter = function () {
     print("ENTER");
-    windSound.play();
+    //windSound.play();
     waterSound.stop();
     rainSound.stop();
-    menuSound.stop();
+    //menuSound.stop();
     clearFish();
   }
 
@@ -298,8 +298,8 @@ function Scene3() {
   this.enter = function () {
     waterSound.play();
     rainSound.stop();
-    windSound.stop();
-    menuSound.stop();
+    //windSound.stop();
+    //menuSound.stop();
     clearSnow();
     
     //create fish sprites
@@ -317,9 +317,9 @@ function Scene3() {
     //create bubbles
     for (i = 0; i < 6; i++) {
       bubbles[i] = new Bubble(
-        random(0, 600),
-        random(250, 900),
-        random(25, 370),
+        random(0, 500),
+        random(250, 400),
+        random(25, 180),
         random(1, 3)
       )
     }
@@ -360,7 +360,7 @@ function Scene3() {
         if (bubbles[i].y < -50) {
           bubbles[i].y = random(windowWidth, windowHeight);
           bubbles[i].x = random(0, windowWidth);
-          bubbles[i].diameter = random(25, 100);
+          bubbles[i].diameter = random(18, 75);
           bubbles[i].speed = random(1, 3);
         } else {
           bubbles[i].y -= bubbles[i].speed / 2;
@@ -376,8 +376,8 @@ function Scene4() {
   this.enter = function () {
     waterSound.stop();
     rainSound.play();
-    windSound.stop();
-    menuSound.stop();
+    //windSound.stop();
+    //menuSound.stop();
     clearSnow();
     clearFish();
     
